@@ -21,8 +21,3 @@ max_action_grid = [2, typemax(Int64)]
 experimental_data_set_names = [
 	"Venturelli", "Bucci", "Maynard", "Carrara", 
 	"Maynard15-19-23", "Maynard15-17-19-21-23"]
-# experimental_data_set_names = [
-# 	"Bucci", 
-# 	"Maynard15-19-23", "Maynard15-17-19-21-23"]
-# experimental_data_set_names = [
-# 	"Venturelli", "Maynard", "Carrara"]

@@ -144,13 +144,13 @@ function get_assemblage_transitions(n_species::Int64,
 	
 	Keyword Args:
 		show_print_statements: If true, shows all print statements
-		ode:
+        ode: ODE Parameters
 
 	Return:
-		assemblage: 
-		transitions
-		assemblage_df
-		transitions_df
+		assemblage: Assemblage dictionary 
+		transitions: Transitions dictionary
+		assemblage_df: Assemblage dataframe 
+		transitions_df: Transitions dataframe
 	=#
 	# Generate transition networks
 	if show_print_statements
@@ -181,10 +181,10 @@ end
 function get_candidates(assemblage_df::DataFrame;
 	show_print_statements = true,
 	max_candidate_pairs = typemax(Int64))
-	#= Generate assemblage and transition
+	#= Generate candidate states and pairs
 		
 	Args:
-		assemblage_df: Assemblage object
+		assemblage_df: Assemblage dataframe
 	
 	Keyword Args:
 		show_print_statements: If true, shows all print statements
@@ -586,7 +586,7 @@ function run_full_experiments(n_species::Int64,
 	save_data = false,
 	relative_path = "",
 	max_candidate_pairs = typemax(Int64))
-	#= Load up experimental or synthetic data.
+	#= Run the full A* experiment.
 		
 	Args:
 		n_species: Number of species in the system
@@ -606,6 +606,7 @@ function run_full_experiments(n_species::Int64,
 	Keyword Args:
 		save_data: Boolean for whether to save data files
 		relative_path: Relative path to save files to
+		max_candidate_pairs: Maximum candidate pairs
 
 	Return:
 		None -- saved to all files

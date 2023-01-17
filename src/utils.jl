@@ -62,7 +62,7 @@ function split_idx(n_species::Int64, n_temps::Int64, idx::Int64)
     Args:
         n_species: Number of species in the system
         n_temps: Number of temperature settings in the system
-        idx: Raw index that varies from 0 to (2^n_species) * n_temps - 1
+        idx: Raw index that varies from 1 to (2^n_species) * n_temps
     
     Return:
         A tuple (idx_species, idx_temp)
@@ -187,6 +187,16 @@ end
 function _number_to_base(n::Int64, 
     base::Int64, 
     digits::Int64)
+    #= Convert decimal to desired base
+        
+    Args:
+        n: Decimal number
+        base: Desired base
+        digits: Number of digits in the base
+    
+    Return:
+        n_base: Number in new base
+    =#
     n_base = Int64[]
     while n > 0
         push!(n_base, Int64(n % base))
@@ -202,6 +212,15 @@ end
 
 function _action_idx_to_vec(n_species::Int64,
     idx::Int64)
+    #= Convert action index to vector (single temperature).
+        
+    Args:
+        n_species: Number of species in the system
+        idx: Raw index of action
+    
+    Return:
+        str: Vector of action
+    =#
     if idx >= 3^n_species
         throw(DomainError(idx, "This action state index is too large."))
     end
@@ -211,6 +230,16 @@ end
 function action_idx_to_lv_action(n_species::Int64, 
     n_temps::Int64, 
     idx::Int64)
+    #= Convert action index to vector (multi temperature).
+        
+    Args:
+        n_species: Number of species in the system
+        n_temps: Number of temperature settings in the system
+        idx: Raw index of action
+    
+    Return:
+        lv_action: LVAction object
+    =#
     # Get the state and temperature index for the action
     ds_idx = (idx - 1) % (3^n_species)
     dt = ((idx - 1) ÷ (3^n_species)) + 1
@@ -221,6 +250,7 @@ function action_idx_to_lv_action(n_species::Int64,
         throw(DomainError(idx, "This action temperature index is too large."))
     end
 
+    # Additions
     adds = findall(x -> x>0, ds)
     add_string = ""
     if length(adds) > 0
@@ -237,7 +267,7 @@ function action_idx_to_lv_action(n_species::Int64,
     end
 
     # Process and input into dictionary
-    # We don't add temp strings since that is context dependent
+    # We don't add temperature strings since that is context dependent
     str = add_string * del_string  
 
     return LVAction(ds, dt, str)

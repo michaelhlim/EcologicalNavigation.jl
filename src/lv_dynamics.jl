@@ -477,9 +477,6 @@ function single_lv_transition(delta_state::Vector{Float64},
         time: Max time for ODE solver range (min time is 0)
     
     Keyword Args:
-		remove_loop: Remove any self-moves
-		show_print_statements: If true, shows all print statements
-        parallelize: Decide to run pmap vs. map
         ode: ODE Parameters
 
 	Returns: (tuple)
